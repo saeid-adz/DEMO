@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: matrix-landing
-        image: ghcr.io/saeid-adz/matrix-landing:v1.0.1
+        image: ghcr.io/saeid-adz/matrix-landing:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
