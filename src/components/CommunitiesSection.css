@@ -1,0 +1,133 @@
+.communities-section {
+  margin: 4rem 0;
+  padding: 2rem;
+}
+
+.communities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.community-card {
+  background: rgba(0, 255, 65, 0.05);
+  border: 2px solid #00ff41;
+  border-radius: 8px;
+  padding: 2rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.community-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.community-card:hover::before {
+  left: 100%;
+}
+
+.community-card:hover {
+  border-color: #00ff41;
+  box-shadow: 
+    0 0 25px rgba(0, 255, 65, 0.4),
+    inset 0 0 25px rgba(0, 255, 65, 0.1);
+  transform: translateY(-8px) scale(1.02);
+}
+
+.community-logo-wrapper {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.community-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(0, 255, 65, 0.5));
+  transition: all 0.3s ease;
+}
+
+.community-card:hover .community-logo {
+  filter: drop-shadow(0 0 20px rgba(0, 255, 65, 0.8));
+  transform: scale(1.1);
+}
+
+.community-logo-placeholder {
+  width: 100px;
+  height: 100px;
+  background: rgba(0, 255, 65, 0.2);
+  border: 2px solid #00ff41;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #00ff41;
+  font-family: 'Courier New', monospace;
+}
+
+.community-name {
+  font-size: 1.3rem;
+  color: #00ff41;
+  margin: 0 0 0.5rem 0;
+  font-weight: bold;
+  font-family: 'Courier New', monospace;
+}
+
+.community-title {
+  font-size: 1rem;
+  color: #00ff41;
+  opacity: 0.8;
+  margin: 0 0 0.5rem 0;
+  font-weight: bold;
+}
+
+.community-description {
+  font-size: 0.9rem;
+  color: #00ff41;
+  opacity: 0.7;
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .communities-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .community-card {
+    padding: 1.5rem;
+  }
+
+  .community-logo-wrapper {
+    width: 80px;
+    height: 80px;
+  }
+
+  .community-logo-placeholder {
+    width: 80px;
+    height: 80px;
+    font-size: 2.5rem;
+  }
+}
