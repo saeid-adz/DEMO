@@ -1,7 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: matrix-app
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: matrix-landing
+  namespace: matrix-app
   labels:
     app: matrix-landing
 spec:
@@ -45,6 +51,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: matrix-landing-service
+  namespace: matrix-app
   labels:
     app: matrix-landing
   annotations:
@@ -60,23 +67,3 @@ spec:
     app: matrix-landing
   externalTrafficPolicy: Cluster
   allocateLoadBalancerNodePorts: true
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: matrix-landing-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  ingressClassName: nginx
-  rules:
-  - host: matrix.local
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: matrix-landing-service
-            port:
-              number: 80

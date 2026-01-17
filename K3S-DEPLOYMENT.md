@@ -46,14 +46,14 @@ docker build -t matrix-landing:latest .
 Deploy the application using kubectl:
 
 ```bash
-# Apply the Kubernetes manifests
+# Apply the Kubernetes manifests (creates namespace and deploys app)
 kubectl apply -f k8s/deployment.yaml
 
 # Verify the deployment
-kubectl get deployments
-kubectl get pods
-kubectl get services
-kubectl get ingress
+kubectl get deployments -n matrix-app
+kubectl get pods -n matrix-app
+kubectl get services -n matrix-app
+kubectl get ingress -n matrix-app
 ```
 
 ## Step 4: Access the Application
@@ -63,7 +63,7 @@ kubectl get ingress
 The service is configured to use MetalLB LoadBalancer. After deployment, get the external IP:
 
 ```bash
-kubectl get service matrix-landing-service -n default
+kubectl get service matrix-landing-service -n matrix-app
 ```
 
 Look for the `EXTERNAL-IP` assigned by MetalLB (e.g., 192.168.1.x). Access the application at:
@@ -93,7 +93,7 @@ Then access the application at: `http://matrix.local`
 ### Option 3: Port Forward (For Testing)
 
 ```bash
-kubectl port-forward service/matrix-landing-service 8080:80
+kubectl port-forward service/matrix-landing-service 8080:80 -n matrix-app
 ```
 
 Then access at: `http://localhost:8080`
@@ -124,13 +124,16 @@ Apply changes and access at: `http://<K3S_NODE_IP>:30080`
 
 ```bash
 # Check pod status
-kubectl get pods -l app=matrix-landing
+kubectl get pods -l app=matrix-landing -n matrix-app
 
 # Check logs
-kubectl logs -l app=matrix-landing
+kubectl logs -l app=matrix-landing -n matrix-app
 
 # Describe deployment
-kubectl describe deployment matrix-landing
+kubectl describe deployment matrix-landing -n matrix-app
+
+# Check service and external IP
+kubectl get svc matrix-landing-service -n matrix-app
 ```
 
 ## Updating the Application
@@ -146,18 +149,18 @@ docker save matrix-landing:latest -o matrix-landing.tar
 sudo k3s ctr images import matrix-landing.tar
 
 # Restart the deployment
-kubectl rollout restart deployment matrix-landing
+kubectl rollout restart deployment matrix-landing -n matrix-app
 
 # Monitor the rollout
-kubectl rollout status deployment matrix-landing
+kubectl rollout status deployment matrix-landing -n matrix-app
 ```
 
 ## Troubleshooting
 
 ### Pods not starting
 ```bash
-kubectl describe pod <pod-name>
-kubectl logs <pod-name>
+kubectl describe pod <pod-name> -n matrix-app
+kubectl logs <pod-name> -n matrix-app
 ```
 
 ### Image pull errors
@@ -166,12 +169,12 @@ kubectl logs <pod-name>
 
 ### Ingress not working
 - Ensure K3s ingress controller (Traefik) is running
-- Check ingress configuration: `kubectl describe ingress matrix-landing-ingress`
+- Check ingress configuration: `kubectl describe ingress matrix-landing-ingress -n matrix-app`
 
 ### Service not accessible
 ```bash
 # Test service internally
-kubectl run test-pod --rm -it --image=busybox -- wget -O- http://matrix-landing-service
+kubectl run test-pod --rm -it --image=busybox -n matrix-app -- wget -O- http://matrix-landing-service
 ```
 
 ## Cleaning Up
@@ -199,8 +202,8 @@ Scale the deployment:
 
 ```bash
 # Scale to 3 replicas
-kubectl scale deployment matrix-landing --replicas=3
+kubectl scale deployment matrix-landing --replicas=3 -n matrix-app
 
 # Auto-scale (requires metrics-server)
-kubectl autoscale deployment matrix-landing --min=2 --max=5 --cpu-percent=80
+kubectl autoscale deployment matrix-landing --min=2 --max=5 --cpu-percent=80 -n matrix-app
 ```

@@ -14,6 +14,10 @@ function App() {
     <div className="app">
       <MatrixRain />
       <div className={`content ${showContent ? 'visible' : ''}`}>
+        <div className="welcome-banner">
+          <span className="banner-text">Welcome to ELDK 2026</span>
+        </div>
+        
         <div className="glitch-wrapper">
           <h1 className="glitch" data-text="ENTER THE MATRIX">
             ENTER THE MATRIX
