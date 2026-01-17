@@ -15,7 +15,7 @@ function App() {
       <MatrixRain />
       <div className={`content ${showContent ? 'visible' : ''}`}>
         <div className="welcome-banner">
-          <span className="banner-text">Welcome to ELDK 2026- Woohoo</span>
+          <span className="banner-text">Welcome to ELDK 2026- Woohooo</span>
         </div>
         
         <div className="glitch-wrapper">
