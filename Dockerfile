@@ -12,20 +12,42 @@ RUN npm ci
 # Copy source files
 COPY . .
 
-# Build the app
+# Build the app  
 RUN npm run build
 
 # Production stage
-FROM nginx:alpine
+FROM node:20-alpine
+
+# Install nginx
+RUN apk add --no-cache nginx
+
+# Create directories
+RUN mkdir -p /var/log/nginx /var/lib/nginx/tmp /usr/share/nginx/html /mnt/photo
 
 # Copy built assets from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/http.d/default.conf
 
-# Expose port 80
-EXPOSE 80
+# Copy backend server files
+WORKDIR /app
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/package.json ./package.json
+COPY server.js ./
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Create startup script
+RUN echo '#!/bin/sh' > /start.sh && \
+    echo 'nginx' >> /start.sh && \
+    echo 'node /app/server.js' >> /start.sh && \
+    chmod +x /start.sh
+
+# Expose ports
+EXPOSE 80 5001
+
+# Environment variables
+ENV PORT=5001
+ENV PHOTO_SHARE_PATH=/mnt/photo
+
+# Start both nginx and node server
+CMD ["/start.sh"]

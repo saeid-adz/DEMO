@@ -141,6 +141,14 @@ body {
   transform: translateY(0);
 }
 
+/* Center profile when only right column is visible (profile-only mode) */
+@media (min-width: 1024px) {
+  .banner-content:has(.right-column:only-child) {
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+}
+
 /* ===== LEFT COLUMN - TEXT & CREDENTIALS ===== */
 .left-column {
   display: flex;
@@ -484,6 +492,50 @@ body {
 
 .social-link:hover .social-icon {
   transform: scale(1.1);
+}
+
+/* Gallery Button */
+.gallery-button-container {
+  margin-top: 1rem;
+  animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+.gallery-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #7B3FE4, #E845B5);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(123, 63, 228, 0.3);
+}
+
+.gallery-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(123, 63, 228, 0.5);
+  background: linear-gradient(135deg, #8B4FF4, #F855C5);
+}
+
+.gallery-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.gallery-button:hover .gallery-icon {
+  transform: rotate(-5deg) scale(1.1);
+}
+
+@media (min-width: 1024px) {
+  .gallery-button {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
 }
 
 /* Community Logos */

@@ -27,13 +27,24 @@ spec:
         ports:
         - containerPort: 80
           name: http
+        - containerPort: 5001
+          name: api
+        env:
+        - name: PORT
+          value: "5001"
+        - name: PHOTO_SHARE_PATH
+          value: "/mnt/photo"
+        volumeMounts:
+        - name: photo-share
+          mountPath: /mnt/photo
+          readOnly: true
         resources:
           requests:
-            memory: "64Mi"
-            cpu: "100m"
-          limits:
             memory: "128Mi"
             cpu: "200m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
         livenessProbe:
           httpGet:
             path: /
@@ -46,6 +57,16 @@ spec:
             port: 80
           initialDelaySeconds: 5
           periodSeconds: 5
+      volumes:
+      - name: photo-share
+        flexVolume:
+          driver: "fstab/cifs"
+          fsType: "cifs"
+          secretRef:
+            name: "cifs-secret"
+          options:
+            networkPath: "//192.168.1.213/photos"
+            mountOptions: "dir_mode=0755,file_mode=0755,noperm"
 ---
 apiVersion: v1
 kind: Service
@@ -63,6 +84,10 @@ spec:
     targetPort: 80
     protocol: TCP
     name: http
+  - port: 5001
+    targetPort: 5001
+    protocol: TCP
+    name: api
   selector:
     app: matrix-landing
   externalTrafficPolicy: Cluster
