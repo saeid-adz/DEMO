@@ -42,7 +42,7 @@ function Home() {
 
           <div className="credentials-section">
             <p className="credential-item">Microsoft Azure MVP</p>
-            <p className="credential-item">Microsoft MCT</p>
+            <p className="credential-item">Microsoft MCT Leader</p>
             <p className="credential-item">Microsoft Learn Expert</p>
           </div>
 
