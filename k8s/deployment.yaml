@@ -20,6 +20,8 @@ spec:
       labels:
         app: matrix-landing
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: k3s-node-master
       containers:
       - name: matrix-landing
         image: ghcr.io/saeid-adz/matrix-landing:latest
