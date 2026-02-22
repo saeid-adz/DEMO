@@ -496,8 +496,7 @@ body {
 
 /* Gallery Button */
 .gallery-button-container {
-  margin-top: 1rem;
-  animation: fadeInUp 0.8s ease-out 0.8s both;
+  margin-top: 0;
 }
 
 .gallery-button {
@@ -533,6 +532,67 @@ body {
 
 @media (min-width: 1024px) {
   .gallery-button {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+}
+
+/* Action Buttons Container */
+.action-buttons-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeInUp 0.8s ease-out 1s both;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .action-buttons-container {
+    grid-column: 1 / -1;
+    margin-top: 3rem;
+  }
+}
+
+/* Upload Button */
+.upload-button-container {
+  margin-top: 0;
+}
+
+.upload-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #00D9FF, #00B4D8);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
+}
+
+.upload-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 217, 255, 0.5);
+  background: linear-gradient(135deg, #00E9FF, #00C4E8);
+}
+
+.upload-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.upload-button:hover .upload-icon {
+  transform: translateY(-3px) scale(1.1);
+}
+
+@media (min-width: 1024px) {
+  .upload-button {
     padding: 1rem 2rem;
     font-size: 1.125rem;
   }

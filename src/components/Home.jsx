@@ -55,12 +55,6 @@ function Home() {
             </div>
           </div>
 
-          <div className="qr-section">
-            <div className="qr-code">
-              <img src="/images/logos/QR.png" alt="QR Code" className="qr-image" />
-            </div>
-          </div>
-
           <div className="connect-section">
             <p className="connect-label">Connect with me:</p>
             <div className="social-links">
@@ -84,18 +78,6 @@ function Home() {
               </a>
             </div>
           </div>
-
-          {/* Gallery Button */}
-          {siteConfig.gallery?.enabled && (
-            <div className="gallery-button-container">
-              <Link to="/gallery" className="gallery-button">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="gallery-icon">
-                  <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-                </svg>
-                <span>View Photo Gallery</span>
-              </Link>
-            </div>
-          )}
         </div>
         )}
 
@@ -140,6 +122,31 @@ function Home() {
             </div>
           </div>
           )}
+        </div>
+
+        {/* Action Buttons - Always visible */}
+        <div className="action-buttons-container">
+          {/* Gallery Button */}
+          {siteConfig.gallery?.enabled && (
+            <div className="gallery-button-container">
+              <Link to="/gallery" className="gallery-button">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="gallery-icon">
+                  <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
+                </svg>
+                <span>Wall of Fame</span>
+              </Link>
+            </div>
+          )}
+
+          {/* Upload Button */}
+          <div className="upload-button-container">
+            <a href="https://photo-upload-app-dev-gx2qwsseztola.azurewebsites.net/" target="_blank" rel="noopener noreferrer" className="upload-button">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="upload-icon">
+                <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/>
+              </svg>
+              <span>Upload Image</span>
+            </a>
+          </div>
         </div>
 
       </div>
