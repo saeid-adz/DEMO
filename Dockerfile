@@ -36,13 +36,37 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
 COPY server.js ./
 
-# Create startup script that runs nginx in background and node in foreground
+# Create startup script that properly handles both services
 RUN echo '#!/bin/sh' > /start.sh && \
     echo 'set -e' >> /start.sh && \
+    echo '' >> /start.sh && \
+    echo '# Function to handle shutdown' >> /start.sh && \
+    echo 'shutdown() {' >> /start.sh && \
+    echo '  echo "Shutting down..."' >> /start.sh && \
+    echo '  kill -TERM "$nginx_pid" "$node_pid" 2>/dev/null' >> /start.sh && \
+    echo '  wait "$nginx_pid" "$node_pid"' >> /start.sh && \
+    echo '  exit 0' >> /start.sh && \
+    echo '}' >> /start.sh && \
+    echo '' >> /start.sh && \
+    echo 'trap shutdown TERM INT' >> /start.sh && \
+    echo '' >> /start.sh && \
     echo 'echo "Starting nginx..."' >> /start.sh && \
     echo 'nginx -g "daemon off;" &' >> /start.sh && \
+    echo 'nginx_pid=$!' >> /start.sh && \
+    echo '' >> /start.sh && \
     echo 'echo "Starting node server..."' >> /start.sh && \
-    echo 'exec node /app/server.js' >> /start.sh && \
+    echo 'node /app/server.js &' >> /start.sh && \
+    echo 'node_pid=$!' >> /start.sh && \
+    echo '' >> /start.sh && \
+    echo 'echo "Both services started"' >> /start.sh && \
+    echo 'echo "nginx PID: $nginx_pid"' >> /start.sh && \
+    echo 'echo "node PID: $node_pid"' >> /start.sh && \
+    echo '' >> /start.sh && \
+    echo '# Wait for either process to exit' >> /start.sh && \
+    echo 'wait -n' >> /start.sh && \
+    echo '' >> /start.sh && \
+    echo '# If we get here, one process died - exit immediately' >> /start.sh && \
+    echo 'exit 1' >> /start.sh && \
     chmod +x /start.sh
 
 # Expose ports
