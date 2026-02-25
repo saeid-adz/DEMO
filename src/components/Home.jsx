@@ -55,6 +55,12 @@ function Home() {
             </div>
           </div>
 
+          <div className="qr-section">
+            <div className="qr-code">
+              <img src="/images/logos/QR.png" alt="QR Code" className="qr-image" />
+            </div>
+          </div>
+
           <div className="connect-section">
             <p className="connect-label">Connect with me:</p>
             <div className="social-links">
