@@ -1,7 +1,7 @@
 // Site Configuration - Enable/Disable sections
 export const siteConfig = {
   // Toggle full content visibility (true = show all, false = show only profile image)
-  showFullContent: true,
+  showFullContent: false,
   
   // Gallery configuration
   gallery: {
